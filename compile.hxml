@@ -1,5 +1,5 @@
 -cp src
 -lib heaps
 -js dist/index.js
--main Main
+-main Game
 -debug

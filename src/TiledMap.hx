@@ -1,31 +1,36 @@
-class TiledMap extends Object {
+import h2d.Tile;
+import h2d.TileGroup;
+import h2d.Scene;
+
+class TiledMap extends TileGroup {
   var mapData: TiledMapData;
-  var tileImage: Tile;
   var tileset: Array<Tile>;
 
-  override public function new(map, tileset) {
+  override public function new(map, tiles) {
     mapData = haxe.Json.parse(hxd.Res.load(map).toText());
-    tileImage = hxd.Res.load(tileset).toTile();
+    tile = hxd.Res.load(tiles).toTile();
+
+    super(tile);
 
     var tw = mapData.tilewidth;
     var th = mapData.tileheight;
     var mw = mapData.width;
     var mh = mapData.height;
-    var scale = s2d.width / (tw * mw);
+    var scale = Config.get("scale");
 
-    tileset = tileImage.gridFlatten(tw);
+    tileset = tile.gridFlatten(tw);
 
     for(layer in mapData.layers) {
-      for(y in 0 ... mh) for (x in 0 ... mw) {
+      for(y in 0...mh) for (x in 0...mw) {
         var tid = layer.data[x + y * mw];
 
         // Tiled maps use 0 for transparent tiles,
         // making tiles 1-indexed
         if (tid != 0) {
-          var tile = tiles[tid - 1];
+          var tile = tileset[tid - 1];
           tile.scaleToSize(tw * scale, th * scale);
 
-          group.add(x * tw * scale, y * th * scale, tile);
+          add(x * tw * scale, y * th * scale, tile);
         }
       }
     }
