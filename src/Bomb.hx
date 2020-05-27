@@ -12,7 +12,7 @@ class Bomb extends Anim {
 
     super(frames, speed, parent);
 
-    scale(Config.get("scale"));
+    scale(Config.get("scale") * Config.get("dpi_scale"));
   }
 
   public function setCell(x: Int, y: Int): Void {

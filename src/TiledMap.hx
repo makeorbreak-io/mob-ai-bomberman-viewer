@@ -16,7 +16,7 @@ class TiledMap extends TileGroup {
     var th = mapData.tileheight;
     var mw = mapData.width;
     var mh = mapData.height;
-    var scale = Config.get("scale");
+    var scale = Config.get("scale") * Config.get("dpi_scale");
 
     tileset = tile.gridFlatten(tw);
 
