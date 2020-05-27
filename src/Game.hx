@@ -10,7 +10,10 @@ class Game extends hxd.App {
     tiledMap = new TiledMap("15x11.json", "tiles.png");
     s2d.addChild(tiledMap);
 
-    addBomb();
+    addEntity(new Bomb());
+
+    addEntity(new Coin());
+    addEntity(new Coin());
   }
 
   override function update(dt: Float) {
@@ -19,7 +22,7 @@ class Game extends hxd.App {
     if (elapsed >= 2) {
       elapsed = 0;
       for (i in 0 ... 3)
-        addBomb();
+        addEntity(new Bomb());
     }
   }
 
@@ -27,14 +30,12 @@ class Game extends hxd.App {
     new Game();
   }
 
-  private function addBomb() {
-    bomb = new Bomb();
-    var x = Math.floor(Math.random() * 16);
-    var y = Math.floor(Math.random() * 16);
+  private function addEntity(entity: Dynamic) {
+    var x = Math.floor(Math.random() * 15);
+    var y = Math.floor(Math.random() * 10);
 
-    bomb.setCell(x, y);
+    entity.setCell(x, y);
 
-    s2d.addChild(bomb);
+    s2d.addChild(entity);
   }
-
 }
